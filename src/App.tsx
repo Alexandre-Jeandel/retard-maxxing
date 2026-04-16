@@ -1,0 +1,264 @@
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { Terminal, CheckCircle2, ChevronRight, Activity, User, ScrollText } from 'lucide-react';
+
+export default function App() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setStatus('submitting');
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+      } else {
+        setStatus('idle');
+        alert('Failed to subscribe. Please try again.');
+      }
+    } catch (error) {
+      setStatus('idle');
+      alert('Network error. Please try again.');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0b101e] text-slate-200 font-sans selection:bg-[#00f0ff] selection:text-[#0b101e] overflow-x-hidden">
+      {/* Background Grid Effect */}
+      <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#121827_1px,transparent_1px),linear-gradient(to_bottom,#121827_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
+
+      <div className="max-w-7xl mx-auto px-6 py-12 lg:py-24 relative z-10">
+        {/* Header */}
+        <header className="flex items-center justify-center lg:justify-start mb-12 lg:mb-24">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-2"
+          >
+            <Terminal className="w-6 h-6 text-[#00f0ff]" />
+            <span className="font-mono font-bold text-xl tracking-wider text-white">
+              retardmaxxing<span className="text-[#00f0ff]">.app</span>
+            </span>
+          </motion.div>
+        </header>
+
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          {/* Left Column: Copy & Form */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00f0ff]/30 bg-[#00f0ff]/10 text-[#00f0ff] font-mono text-xs font-medium mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f0ff] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00f0ff]"></span>
+              </span>
+              PROTOCOL PRE-LAUNCH ACTIVE
+            </div>
+
+            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-white leading-[1.1]">
+              LEVEL UP YOUR <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#b53471] text-glow-cyan">
+                REALITY.
+              </span>
+            </h1>
+            
+            <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+              The ultimate gamified self-improvement system. Turn your life into a main character quest log. 
+              Subscribe now to secure your spot in the beta and unlock a <strong className="text-[#00f0ff] font-mono">50% DISCOUNT</strong> for your first year.
+            </p>
+
+            {/* Opt-in Form */}
+            <div className="bg-[#121827] p-6 rounded-lg border border-slate-800 relative overflow-hidden text-left mx-auto max-w-md lg:max-w-none lg:mx-0">
+              {/* Decorative corners */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00f0ff]" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#00f0ff]" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#00f0ff]" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00f0ff]" />
+
+              {status === 'success' ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-6 text-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#00f0ff]/20 flex items-center justify-center mb-4">
+                    <CheckCircle2 className="w-6 h-6 text-[#00f0ff]" />
+                  </div>
+                  <h3 className="font-mono text-lg text-white mb-2">[ REGISTRATION CONFIRMED ]</h3>
+                  <p className="text-slate-400 text-sm">
+                    Your spot is secured. Awaiting protocol initialization. We will contact you soon.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="email" className="block font-mono text-xs text-[#00f0ff] mb-2 uppercase tracking-wider">
+                      Enter Comm-Link (Email)
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <ChevronRight className="h-4 w-4 text-slate-500" />
+                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="block w-full pl-10 pr-3 py-3 bg-[#0b101e] border border-slate-700 rounded-md text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#00f0ff] focus:border-[#00f0ff] font-mono text-sm transition-colors"
+                        placeholder="player@system.net"
+                        disabled={status === 'submitting'}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={status === 'submitting'}
+                    className="w-full relative group overflow-hidden rounded-md bg-[#00f0ff]/10 border border-[#00f0ff]/50 px-4 py-3 font-mono text-sm font-bold text-[#00f0ff] transition-all hover:bg-[#00f0ff]/20 hover:border-[#00f0ff] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {status === 'submitting' ? 'INITIALIZING...' : 'CLAIM 50% DISCOUNT'}
+                    </span>
+                    {/* Hover effect background */}
+                    <div className="absolute inset-0 h-full w-0 bg-[#00f0ff]/20 transition-all duration-300 ease-out group-hover:w-full" />
+                  </button>
+                </form>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Right Column: Phone Mockup */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
+            className="relative mx-auto w-full max-w-[320px] lg:max-w-[380px]"
+          >
+            {/* Glow behind phone */}
+            <div className="absolute inset-0 bg-[#00f0ff] blur-[100px] opacity-20 rounded-full" />
+            
+            {/* Phone Frame */}
+            <div className="relative bg-[#0b101e] rounded-[2.5rem] border-[6px] border-slate-800 shadow-2xl overflow-hidden aspect-[9/19.5] flex flex-col">
+              {/* Notch */}
+              <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-20">
+                <div className="w-32 h-full bg-slate-800 rounded-b-xl" />
+              </div>
+
+              {/* App Content Mockup */}
+              <div className="flex-1 overflow-hidden flex flex-col pt-12 pb-6 px-4 relative">
+                
+                {/* Header */}
+                <div className="text-center mb-6">
+                  <h2 className="font-mono text-2xl font-bold text-[#00f0ff] text-glow-cyan tracking-widest">
+                    [ SYSTEM ]
+                  </h2>
+                  <p className="font-mono text-[10px] text-slate-500 tracking-widest mt-1">
+                    RETARDMAXXING PROTOCOL ACTIVE
+                  </p>
+                </div>
+
+                {/* Player Card */}
+                <div className="border border-slate-800 rounded-lg p-4 mb-4 relative bg-[#121827]/50 clip-corner-tl">
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00f0ff]" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00f0ff]" />
+                  
+                  <div className="flex justify-between items-end mb-4">
+                    <div>
+                      <h3 className="font-sans text-2xl font-bold text-white tracking-wide">PLAYER</h3>
+                      <p className="font-mono text-xs text-[#00f0ff] mt-1">RANK: E-RANK (NPC)</p>
+                    </div>
+                    <div className="font-mono text-2xl font-bold text-[#00f0ff] text-glow-cyan">
+                      LVL 4
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-mono text-[10px] text-slate-400">
+                      <span>EXP</span>
+                      <span>1614 / 3375</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#00f0ff] w-[48%] shadow-[0_0_10px_#00f0ff]" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Attributes Card */}
+                <div className="border border-slate-800 rounded-lg p-4 flex-1 relative bg-[#121827]/50">
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00f0ff]" />
+                  
+                  <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-2">
+                    <Activity className="w-4 h-4 text-[#00f0ff]" />
+                    <h3 className="font-mono text-sm text-white tracking-wider">MENTAL ATTRIBUTES</h3>
+                  </div>
+
+                  {/* Fake Radar Chart */}
+                  <div className="relative w-full aspect-square max-w-[200px] mx-auto mt-4">
+                    {/* Grid lines */}
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-30">
+                      <polygon points="50,10 90,50 50,90 10,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
+                      <polygon points="50,25 75,50 50,75 25,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
+                      <polygon points="50,40 60,50 50,60 40,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
+                      <line x1="50" y1="10" x2="50" y2="90" stroke="#00f0ff" strokeWidth="0.5" />
+                      <line x1="10" y1="50" x2="90" y2="50" stroke="#00f0ff" strokeWidth="0.5" />
+                    </svg>
+                    {/* Data polygon */}
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
+                      <polygon points="50,45 65,50 50,55 15,50" fill="rgba(0, 240, 255, 0.2)" stroke="#00f0ff" strokeWidth="1" className="drop-shadow-[0_0_5px_rgba(0,240,255,0.8)]" />
+                    </svg>
+                    
+                    {/* Labels */}
+                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 font-mono text-[8px] text-[#00f0ff]">Execution</span>
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 font-mono text-[8px] text-[#00f0ff]">Ignorance</span>
+                    <span className="absolute top-1/2 right-0 translate-x-4 -translate-y-1/2 font-mono text-[8px] text-[#00f0ff]">Instinct</span>
+                    <span className="absolute top-1/2 left-0 -translate-x-4 -translate-y-1/2 font-mono text-[8px] text-[#00f0ff]">Momentum</span>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom Navigation Bar */}
+              <div className="h-20 bg-[#121827] border-t border-slate-800 flex items-center justify-around px-6 relative z-10">
+                <div className="flex flex-col items-center gap-1 text-[#00f0ff]">
+                  <User className="w-5 h-5" />
+                  <span className="font-mono text-[8px] tracking-widest">STATUS</span>
+                </div>
+                
+                {/* Center Mic Button */}
+                <div className="absolute left-1/2 -translate-x-1/2 -top-6">
+                  <div className="w-16 h-16 rounded-full bg-[#0b101e] border-2 border-[#00f0ff] flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                    <div className="w-12 h-12 rounded-full bg-[#121827] flex items-center justify-center">
+                      <svg className="w-6 h-6 text-[#00f0ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] text-[#00f0ff] tracking-widest">UPLOAD</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1 text-slate-500">
+                  <ScrollText className="w-5 h-5" />
+                  <span className="font-mono text-[8px] tracking-widest">QUESTS</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
