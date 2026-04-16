@@ -3,12 +3,11 @@ import { createServer as createViteServer } from "vite";
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
+import rateLimit from "express-rate-limit";
 
 // Initialize SQLite database
 const dbDir = path.join(process.cwd(), 'data');
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir);
-}
+fs.mkdirSync(dbDir, { recursive: true });
 const db = new Database(path.join(dbDir, 'waitlist.db'));
 
 // Create table if not exists
@@ -22,19 +21,29 @@ db.exec(`
 
 const insertSubscriber = db.prepare('INSERT OR IGNORE INTO subscribers (email) VALUES (?)');
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const subscribeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: { error: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json());
+  app.use(express.json({ limit: '10kb' }));
 
   // API routes FIRST
-  app.post('/api/subscribe', (req, res) => {
+  app.post('/api/subscribe', subscribeLimiter, (req, res) => {
     const { email } = req.body;
-    if (!email || typeof email !== 'string') {
+    if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email) || email.length > 254) {
       return res.status(400).json({ error: 'Invalid email' });
     }
-    
+
     try {
       insertSubscriber.run(email);
       res.json({ success: true });

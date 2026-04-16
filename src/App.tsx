@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { Terminal, CheckCircle2, ChevronRight, Activity, User, ScrollText } from 'lucide-react';
 
 export default function App() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setStatus('submitting');
+    setErrorMsg('');
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -19,17 +21,18 @@ export default function App() {
         },
         body: JSON.stringify({ email }),
       });
-      
+
       if (response.ok) {
         setStatus('success');
         setEmail('');
       } else {
-        setStatus('idle');
-        alert('Failed to subscribe. Please try again.');
+        const data = await response.json().catch(() => ({}));
+        setErrorMsg(data.error || 'Failed to subscribe. Please try again.');
+        setStatus('error');
       }
-    } catch (error) {
-      setStatus('idle');
-      alert('Network error. Please try again.');
+    } catch {
+      setErrorMsg('Network error. Please try again.');
+      setStatus('error');
     }
   };
 
@@ -125,6 +128,11 @@ export default function App() {
                       />
                     </div>
                   </div>
+                  {status === 'error' && (
+                    <p className="font-mono text-xs text-red-400 bg-red-900/20 border border-red-800 rounded px-3 py-2">
+                      {errorMsg}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
