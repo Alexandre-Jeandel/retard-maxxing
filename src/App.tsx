@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
-import { Terminal, CheckCircle2, ChevronRight, Activity, User, ScrollText } from 'lucide-react';
+import { Terminal, CheckCircle2, ChevronRight } from 'lucide-react';
 import img1 from '../images/1.png';
 import img2 from '../images/2.png';
 
@@ -151,104 +151,15 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Right Column: Phone Mockup */}
-          <motion.div 
+          {/* Right Column: Images */}
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-            className="relative mx-auto w-full max-w-[320px] lg:max-w-[380px]"
+            className="flex flex-col gap-6 mx-auto w-full"
           >
-            {/* Glow behind phone */}
-            <div className="absolute inset-0 bg-[#00f0ff] blur-[100px] opacity-20 rounded-full" />
-            
-            {/* Phone Frame */}
-            <div className="relative bg-[#0b101e] rounded-[2.5rem] border-[6px] border-slate-800 shadow-2xl overflow-hidden aspect-[9/19.5] flex flex-col">
-              {/* Notch */}
-              <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-20">
-                <div className="w-32 h-full bg-slate-800 rounded-b-xl" />
-              </div>
-
-              {/* App Content Mockup */}
-              <div className="flex-1 overflow-hidden flex flex-col pt-12 pb-6 px-4 relative">
-                
-                {/* Header */}
-                <div className="text-center mb-6">
-                  <h2 className="font-mono text-2xl font-bold text-[#00f0ff] text-glow-cyan tracking-widest">
-                    [ SYSTEM ]
-                  </h2>
-                  <p className="font-mono text-[10px] text-slate-500 tracking-widest mt-1">
-                    RETARDMAXXING PROTOCOL ACTIVE
-                  </p>
-                </div>
-
-                {/* Player Card */}
-                <div className="border border-slate-800 rounded-lg p-4 mb-4 relative bg-[#121827]/50 clip-corner-tl">
-                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00f0ff]" />
-                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00f0ff]" />
-                  
-                  <div className="flex justify-between items-end mb-4">
-                    <div>
-                      <h3 className="font-sans text-2xl font-bold text-white tracking-wide">PLAYER</h3>
-                      <p className="font-mono text-xs text-[#00f0ff] mt-1">RANK: E-RANK (NPC)</p>
-                    </div>
-                    <div className="font-mono text-2xl font-bold text-[#00f0ff] text-glow-cyan">
-                      LVL 4
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <div className="flex justify-between font-mono text-[10px] text-slate-400">
-                      <span>EXP</span>
-                      <span>1614 / 3375</span>
-                    </div>
-                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#00f0ff] w-[48%] shadow-[0_0_10px_#00f0ff]" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Attributes Card */}
-                <div className="border border-slate-800 rounded-lg p-4 flex-1 relative bg-[#121827]/50">
-                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00f0ff]" />
-                  
-                  <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-2">
-                    <Activity className="w-4 h-4 text-[#00f0ff]" />
-                    <h3 className="font-mono text-sm text-white tracking-wider">MENTAL ATTRIBUTES</h3>
-                  </div>
-
-                  <div className="flex flex-col gap-3 mt-4">
-                    <img src={img1} alt="" className="w-full rounded object-contain" />
-                    <img src={img2} alt="" className="w-full rounded object-contain" />
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Bottom Navigation Bar */}
-              <div className="h-20 bg-[#121827] border-t border-slate-800 flex items-center justify-around px-6 relative z-10">
-                <div className="flex flex-col items-center gap-1 text-[#00f0ff]">
-                  <User className="w-5 h-5" />
-                  <span className="font-mono text-[8px] tracking-widest">STATUS</span>
-                </div>
-                
-                {/* Center Mic Button */}
-                <div className="absolute left-1/2 -translate-x-1/2 -top-6">
-                  <div className="w-16 h-16 rounded-full bg-[#0b101e] border-2 border-[#00f0ff] flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                    <div className="w-12 h-12 rounded-full bg-[#121827] flex items-center justify-center">
-                      <svg className="w-6 h-6 text-[#00f0ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] text-[#00f0ff] tracking-widest">UPLOAD</span>
-                </div>
-
-                <div className="flex flex-col items-center gap-1 text-slate-500">
-                  <ScrollText className="w-5 h-5" />
-                  <span className="font-mono text-[8px] tracking-widest">QUESTS</span>
-                </div>
-              </div>
-            </div>
+            <img src={img1} alt="" className="w-full rounded-lg object-contain" />
+            <img src={img2} alt="" className="w-full rounded-lg object-contain" />
           </motion.div>
         </div>
       </div>
