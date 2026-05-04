@@ -156,7 +156,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col gap-6 w-full"
+            className="flex flex-col gap-6 max-w-xl mx-auto w-full"
           >
             <img src={img1} alt="" className="w-full rounded-lg object-contain" />
             <img src={img2} alt="" className="w-full rounded-lg object-contain" />
