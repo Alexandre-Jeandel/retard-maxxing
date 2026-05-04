@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { Terminal, CheckCircle2, ChevronRight, Activity, User, ScrollText } from 'lucide-react';
+import img1 from '../images/1.png';
+import img2 from '../images/2.png';
 
 export default function App() {
   const [email, setEmail] = useState('');
@@ -51,7 +53,7 @@ export default function App() {
           >
             <Terminal className="w-6 h-6 text-[#00f0ff]" />
             <span className="font-mono font-bold text-xl tracking-wider text-white">
-              retardmaxxing<span className="text-[#00f0ff]">.app</span>
+              thealtar<span className="text-[#00f0ff]">.quest</span>
             </span>
           </motion.div>
         </header>
@@ -214,26 +216,9 @@ export default function App() {
                     <h3 className="font-mono text-sm text-white tracking-wider">MENTAL ATTRIBUTES</h3>
                   </div>
 
-                  {/* Fake Radar Chart */}
-                  <div className="relative w-full aspect-square max-w-[200px] mx-auto mt-4">
-                    {/* Grid lines */}
-                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-30">
-                      <polygon points="50,10 90,50 50,90 10,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
-                      <polygon points="50,25 75,50 50,75 25,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
-                      <polygon points="50,40 60,50 50,60 40,50" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
-                      <line x1="50" y1="10" x2="50" y2="90" stroke="#00f0ff" strokeWidth="0.5" />
-                      <line x1="10" y1="50" x2="90" y2="50" stroke="#00f0ff" strokeWidth="0.5" />
-                    </svg>
-                    {/* Data polygon */}
-                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
-                      <polygon points="50,45 65,50 50,55 15,50" fill="rgba(0, 240, 255, 0.2)" stroke="#00f0ff" strokeWidth="1" className="drop-shadow-[0_0_5px_rgba(0,240,255,0.8)]" />
-                    </svg>
-                    
-                    {/* Labels */}
-                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 font-mono text-[8px] text-[#00f0ff]">Execution</span>
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 font-mono text-[8px] text-[#00f0ff]">Ignorance</span>
-                    <span className="absolute top-1/2 right-0 translate-x-4 -translate-y-1/2 font-mono text-[8px] text-[#00f0ff]">Instinct</span>
-                    <span className="absolute top-1/2 left-0 -translate-x-4 -translate-y-1/2 font-mono text-[8px] text-[#00f0ff]">Momentum</span>
+                  <div className="flex flex-col gap-3 mt-4">
+                    <img src={img1} alt="" className="w-full rounded object-contain" />
+                    <img src={img2} alt="" className="w-full rounded object-contain" />
                   </div>
                 </div>
 
