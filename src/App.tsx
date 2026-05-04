@@ -58,13 +58,13 @@ export default function App() {
           </motion.div>
         </header>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-          {/* Left Column: Copy & Form */}
-          <motion.div 
+        <div className="flex flex-col gap-12 lg:gap-24">
+          {/* Copy & Form */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
+            className="max-w-xl mx-auto text-center"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00f0ff]/30 bg-[#00f0ff]/10 text-[#00f0ff] font-mono text-xs font-medium mb-6">
               <span className="relative flex h-2 w-2">
@@ -151,12 +151,12 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Right Column: Images */}
+          {/* Images below everything */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-            className="flex flex-col gap-6 mx-auto w-full"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col gap-6 w-full"
           >
             <img src={img1} alt="" className="w-full rounded-lg object-contain" />
             <img src={img2} alt="" className="w-full rounded-lg object-contain" />
